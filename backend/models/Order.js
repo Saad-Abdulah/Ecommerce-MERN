@@ -1,38 +1,47 @@
-const mongoose=require("mongoose")
-const {Schema}=mongoose
+const mongoose = require('mongoose')
 
-const orderSchema=new Schema({
-    user:{
-        type:Schema.Types.ObjectId,
-        ref:"User",
-        required:true
+const orderSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
-    item:{
-        type:[Schema.Types.Mixed],
-        required:true
+    item: [{
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product',
+            required: true
+        },
+        quantity: {
+            type: Number,
+            required: true
+        },
+        isDeleted: {
+            type: Boolean,
+            default: false
+        },
+        deletedAt: {
+            type: Date,
+            default: null
+        }
+    }],
+    address: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address',
+        required: true
+    }],
+    paymentMode: {
+        type: String,
+        required: true
     },
-    address:{
-        type:[Schema.Types.Mixed],
-        required:true
+    status: {
+        type: String,
+        default: 'Pending'
     },
-    status:{
-        type:String,
-        enum:['Pending','Dispatched','Out for delivery','Cancelled'],
-        default:'Pending'
-    },
-    paymentMode:{
-        type:String,
-        enum:['COD','UPI','CARD'],
-        required:true
-    },
-    total:{
-        type:Number,
-        required:true
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-},{versionKey:false})
+    total: {
+        type: Number,
+        required: true
+    }
+}, { timestamps: true })
 
-module.exports=mongoose.model("Order",orderSchema)
+module.exports = mongoose.model('Order', orderSchema)

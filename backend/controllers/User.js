@@ -1,26 +1,68 @@
-const User=require("../models/User")
+const User = require('../models/User')
+const multer = require('multer')
+const path = require('path')
 
-exports.getById=async(req,res)=>{
+// Configure multer for file upload
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../frontend/public/profileImages/')
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, uniqueSuffix + path.extname(file.originalname))
+    }
+})
+
+const upload = multer({ 
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true)
+        } else {
+            cb(new Error('Not an image! Please upload an image.'), false)
+        }
+    }
+}).single('profileImage')
+
+// Update user by id
+exports.updateUserById = async (req, res) => {
     try {
-        const {id}=req.params
-        const result=(await User.findById(id)).toObject()
-        delete result.password
-        res.status(200).json(result)
-        
+        upload(req, res, async function(err) {
+            if (err) {
+                return res.status(400).json({ message: err.message })
+            }
+
+            const update = { ...req.body }
+            if (req.file) {
+                update.profileImage = req.file.filename
+            }
+
+            const updatedUser = await User.findByIdAndUpdate(
+                req.body._id,
+                update,
+                { new: true }
+            ).select('-password')
+
+            if (!updatedUser) {
+                return res.status(404).json({ message: "User not found" })
+            }
+
+            res.json(updatedUser)
+        })
     } catch (error) {
-        console.log(error);
-        res.status(500).json({message:'Error getting your details, please try again later'})
+        res.status(400).json({ message: error.message })
     }
 }
-exports.updateById=async(req,res)=>{
-    try {
-        const {id}=req.params
-        const updated=(await User.findByIdAndUpdate(id,req.body,{new:true})).toObject()
-        delete updated.password
-        res.status(200).json(updated)
 
+// Get logged in user by id
+exports.fetchLoggedInUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password')
+        if (!user) {
+            return res.status(404).json({ message: "User not found" })
+        }
+        res.json(user)
     } catch (error) {
-        console.log(error);
-        res.status(500).json({message:'Error getting your details, please try again later'})
+        res.status(400).json({ message: error.message })
     }
 }

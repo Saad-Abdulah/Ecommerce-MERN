@@ -15,6 +15,14 @@ exports.getByUserId=async(req,res)=>{
     try {
         const {id}=req.params
         const results=await Order.find({user:id})
+            .populate({
+                path: 'item.product',
+                populate: {
+                    path: 'brand'
+                }
+            })
+            .populate('address')
+            .exec()
         res.status(200).json(results)
     } catch (error) {
         console.log(error);
@@ -35,7 +43,17 @@ exports.getAll = async (req, res) => {
         }
 
         const totalDocs=await Order.find({}).countDocuments().exec()
-        const results=await Order.find({}).skip(skip).limit(limit).exec()
+        const results=await Order.find({})
+            .populate({
+                path: 'item.product',
+                populate: {
+                    path: 'brand'
+                }
+            })
+            .populate('address')
+            .skip(skip)
+            .limit(limit)
+            .exec()
 
         res.header("X-Total-Count",totalDocs)
         res.status(200).json(results)
@@ -50,6 +68,13 @@ exports.updateById=async(req,res)=>{
     try {
         const {id}=req.params
         const updated=await Order.findByIdAndUpdate(id,req.body,{new:true})
+            .populate({
+                path: 'item.product',
+                populate: {
+                    path: 'brand'
+                }
+            })
+            .populate('address')
         res.status(200).json(updated)
     } catch (error) {
         console.log(error);

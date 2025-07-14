@@ -17,7 +17,7 @@ import { ITEMS_PER_PAGE } from '../../../constants'
 import {createWishlistItemAsync, deleteWishlistItemByIdAsync, resetWishlistItemAddStatus, resetWishlistItemDeleteStatus, selectWishlistItemAddStatus, selectWishlistItemDeleteStatus, selectWishlistItems} from '../../wishlist/WishlistSlice'
 import {selectLoggedInUser} from '../../auth/AuthSlice'
 import {toast} from 'react-toastify'
-import {banner1, banner2, banner3, banner4, loadingAnimation} from '../../../assets'
+import {loadingAnimation} from '../../../assets'
 import { resetCartItemAddStatus, selectCartItemAddStatus } from '../../cart/CartSlice'
 import { motion } from 'framer-motion'
 import { ProductBanner } from './ProductBanner'
@@ -31,7 +31,12 @@ const sortOptions=[
 ]
 
 
-const bannerImages=[banner1,banner3,banner2,banner4]
+const bannerImages=[
+"https://static.vecteezy.com/system/resources/previews/004/299/815/non_2x/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg",
+  "https://static.vecteezy.com/system/resources/thumbnails/004/299/835/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-free-vector.jpg",
+  "https://as2.ftcdn.net/v2/jpg/03/60/83/39/1000_F_360833901_HIMb2zldJ3jsf2tiKWbgDDwCkmeaxBJ5.jpg",
+  "https://as2.ftcdn.net/v2/jpg/09/61/80/31/1000_F_961803199_ivVpRJBTnxwHzBAIsTDoti6q39ngTghf.jpg",
+]
 
 export const ProductList = () => {
     const [filters,setFilters]=useState({})

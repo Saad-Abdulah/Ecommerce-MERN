@@ -1,9 +1,8 @@
-const express=require("express")
-const userController=require("../controllers/User")
-const router=express.Router()
+const express = require('express')
+const { fetchLoggedInUserById, updateUserById } = require('../controllers/User')
+const router = express.Router()
 
-router
-    .get("/:id",userController.getById)
-    .patch("/:id",userController.updateById)
+router.get('/:id', fetchLoggedInUserById)
+router.patch('/:id', updateUserById)
 
-module.exports=router
+module.exports = router

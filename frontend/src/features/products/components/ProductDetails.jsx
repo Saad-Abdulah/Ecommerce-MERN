@@ -75,12 +75,19 @@ export const ProductDetails = () => {
         })
     },[])
     
-    useEffect(()=>{
-        if(id){
+    useEffect(() => {
+        if (id) {
             dispatch(fetchProductByIdAsync(id))
+                .unwrap()
+                .catch(error => {
+                    if (error.message === 'Product not found') {
+                        toast.error('This product has been removed');
+                        navigate('/');
+                    }
+                });
             dispatch(fetchReviewsByProductIdAsync(id))
         }
-    },[id])
+    }, [id]);
 
     useEffect(()=>{
 
@@ -261,7 +268,7 @@ export const ProductDetails = () => {
                             </Stack>
 
                             {/* price */}
-                            <Typography variant='h5'>${product?.price}</Typography>
+                            <Typography variant='h5'>{product?.price}</Typography>
                         </Stack>
 
                         {/* description */}

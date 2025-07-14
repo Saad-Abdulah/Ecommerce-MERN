@@ -53,13 +53,13 @@ export const Navbar=({isProductList=false})=> {
     {name:loggedInUser?.isAdmin?'Orders':'My orders',to:loggedInUser?.isAdmin?"/admin/orders":"/orders"},
     {name:'Logout',to:"/logout"},
   ];
-
+  console.log(loggedInUser)
   return (
     <AppBar position="sticky" sx={{backgroundColor:"white",boxShadow:"none",color:"text.primary"}}>
         <Toolbar sx={{p:1,height:"4rem",display:"flex",justifyContent:"space-around"}}>
 
           <Typography variant="h6" noWrap component="a" href="/" sx={{ mr: 2, display: { xs: 'none', md: 'flex' },fontWeight: 700, letterSpacing: '.3rem', color: 'inherit', textDecoration: 'none', }}>
-            MERN SHOP
+            E-Commerce Store
           </Typography>
 
 
@@ -67,7 +67,10 @@ export const Navbar=({isProductList=false})=> {
           <Stack flexDirection={'row'} alignItems={'center'} justifyContent={'center'} columnGap={2}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={userInfo?.name} src="null" />
+                <Avatar 
+                  src={loggedInUser?.profileImage ? `/profileImages/${loggedInUser.profileImage}` : null}
+                  alt={loggedInUser?.name} 
+                />
               </IconButton>
             </Tooltip>
             <Menu

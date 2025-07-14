@@ -1,4 +1,4 @@
-import {Button, IconButton, Menu, MenuItem, Paper, Rating, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
+import {Button, IconButton, Menu, MenuItem, Paper, Rating, Stack, TextField, Typography, useMediaQuery, useTheme, Avatar } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +7,7 @@ import {deleteReviewByIdAsync, selectReviewStatus, updateReviewByIdAsync} from '
 import { useForm } from "react-hook-form"
 import {LoadingButton} from '@mui/lab'
 
-export const ReviewItem = ({id,username,userid,comment,rating,createdAt}) => {
+export const ReviewItem = ({id, username, userid, comment, rating, createdAt, userProfileImage}) => {
 
   const dispatch=useDispatch()
   const loggedInUser=useSelector(selectLoggedInUser)
@@ -46,6 +46,11 @@ export const ReviewItem = ({id,username,userid,comment,rating,createdAt}) => {
         <Stack flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'}>
 
             <Stack flexDirection={'row'} columnGap={2}>
+                <Avatar 
+                    src={userProfileImage ? `/profileImages/${userProfileImage}` : null}
+                    alt={username}
+                    sx={{ width: 40, height: 40 }}
+                />
                 <Stack> 
                         <Typography variant='h6' fontSize={"1.1rem"} fontWeight={500}>{username}</Typography>
                         <motiondiv>

@@ -8,6 +8,6 @@ router
     .get("/:id",productController.getById)
     .patch("/:id",productController.updateById)
     .patch("/undelete/:id",productController.undeleteById)
-    .delete("/:id",productController.deleteById)
+    .delete("/:id",productController.deleteProductById)
 
 module.exports=router

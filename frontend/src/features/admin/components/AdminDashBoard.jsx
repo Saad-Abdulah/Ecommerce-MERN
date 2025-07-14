@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, IconButton, InputLabel, MenuItem, Pagination, Select, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Button, FormControl, Grid, IconButton, InputLabel, MenuItem, Pagination, Select, Stack, Typography, useMediaQuery, useTheme, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Accordion from '@mui/material/Accordion';
@@ -42,6 +42,9 @@ export const AdminDashBoard = () => {
     const is600=useMediaQuery(theme.breakpoints.down(600))
     const is488=useMediaQuery(theme.breakpoints.down(488))
 
+    const [deleteProductId, setDeleteProductId] = useState(null);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
     useEffect(()=>{
         setPage(1)
     },[totalResults])
@@ -77,8 +80,22 @@ export const AdminDashBoard = () => {
         setFilters({...filters,category:filterArray})
     }
 
-    const handleProductDelete=(productId)=>{
-        dispatch(deleteProductByIdAsync(productId))
+    const handleProductDelete = (productId) => {
+        setDeleteProductId(productId);
+        setOpenDeleteDialog(true);
+    }
+
+    const handleConfirmDelete = () => {
+        if (deleteProductId) {
+            dispatch(deleteProductByIdAsync(deleteProductId));
+            setOpenDeleteDialog(false);
+            setDeleteProductId(null);
+        }
+    }
+
+    const handleCancelDelete = () => {
+        setOpenDeleteDialog(false);
+        setDeleteProductId(null);
     }
 
     const handleProductUnDelete=(productId)=>{
@@ -199,7 +216,7 @@ export const AdminDashBoard = () => {
                             <Button component={Link} to={`/admin/product-update/${product._id}`} variant='contained'>Update</Button>
                             {
                                 product.isDeleted===true?(
-                                    <Button onClick={()=>handleProductUnDelete(product._id)} color='error' variant='outlined'>Un-delete</Button>
+                                    <Button onClick={()=>handleProductUnDelete(product._id)} color='error' variant='outlined'>Undo</Button>
                                 ):(
                                     <Button onClick={()=>handleProductDelete(product._id)} color='error' variant='outlined'>Delete</Button>
                                 )
@@ -216,6 +233,27 @@ export const AdminDashBoard = () => {
         </Stack>    
     
     </Stack> 
+    <Dialog
+                open={openDeleteDialog}
+                onClose={handleCancelDelete}
+                aria-labelledby="delete-dialog-title"
+                aria-describedby="delete-dialog-description"
+            >
+                <DialogTitle id="delete-dialog-title">
+                    {"Are you sure you want to delete this product?"}
+                </DialogTitle>
+                <DialogContent>
+                    <Typography>
+                        This action cannot be undone. The product will be permanently deleted and removed from all user carts and wishlists.
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCancelDelete}>Cancel</Button>
+                    <Button onClick={handleConfirmDelete} color="error" variant="contained">
+                        Yes, Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
     </>
   )
 }

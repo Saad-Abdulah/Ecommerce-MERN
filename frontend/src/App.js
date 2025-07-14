@@ -10,6 +10,7 @@ import { useAuthCheck } from "./hooks/useAuth/useAuthCheck";
 import { useFetchLoggedInUserDetails } from "./hooks/useAuth/useFetchLoggedInUserDetails";
 import { AddProductPage, AdminOrdersPage, CartPage, CheckoutPage, ForgotPasswordPage, HomePage, LoginPage, OrderSuccessPage, OtpVerificationPage, ProductDetailsPage, ProductUpdatePage, ResetPasswordPage, SignupPage, UserOrdersPage, UserProfilePage, WishlistPage } from './pages';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
+import { AdminProfilePage } from './pages/AdminProfilePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 
@@ -39,6 +40,7 @@ function App() {
             // admin routes
             <>
             <Route path='/admin/dashboard' element={<Protected><AdminDashboardPage/></Protected>}/>
+            <Route path='/admin/profile' element={<Protected><AdminProfilePage/></Protected>}/>
             <Route path='/admin/product-update/:id' element={<Protected><ProductUpdatePage/></Protected>}/>
             <Route path='/admin/add-product' element={<Protected><AddProductPage/></Protected>}/>
             <Route path='/admin/orders'  element={<Protected><AdminOrdersPage/></Protected>}/>

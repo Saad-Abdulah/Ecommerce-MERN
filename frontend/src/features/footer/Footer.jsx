@@ -25,17 +25,10 @@ export const Footer = () => {
             <Stack flexDirection={'row'} rowGap={'1rem'} justifyContent={is700?"":'space-around'} flexWrap={'wrap'}>
 
                 <Stack rowGap={'1rem'} padding={'1rem'}>
-                    <Typography variant='h6' fontSize={'1.5rem'}>Exclusive</Typography>
-                    <Typography variant='h6'>Subscribe</Typography>
-                    <Typography sx={labelStyles}>Get 10% off your first order</Typography>
-                    <TextField placeholder='Enter your email' sx={{border:'1px solid white',borderRadius:"6px"}} InputProps={{endAdornment:<IconButton><SendIcon sx={{color:theme.palette.primary.light}}/></IconButton>,style:{color:"whitesmoke"}}}/>
-                </Stack>
-
-                <Stack rowGap={'1rem'} padding={'1rem'}>
                     <Typography variant='h6'>Support</Typography>
-                    <Typography sx={labelStyles}>11th Main Street, Dhaka,  DH 1515, California.</Typography>
+                    <Typography sx={labelStyles}>11th Main Street, ----, Islamabad, Pakistan</Typography>
                     <Typography sx={labelStyles}>exclusive@gmail.com</Typography>
-                    <Typography sx={labelStyles}>+88015-88888-9999</Typography>
+                    <Typography sx={labelStyles}>+12345-67890-1234</Typography>
                 </Stack>
 
                 <Stack rowGap={'1rem'} padding={'1rem'}>
@@ -53,27 +46,6 @@ export const Footer = () => {
                     <Typography sx={labelStyles}>Terms Of Use</Typography>
                     <Typography sx={labelStyles}>FAQ</Typography>
                     <Typography sx={labelStyles}>Contact</Typography>
-                </Stack>
-
-                <Stack rowGap={'1rem'} padding={'1rem'}>
-                    <Typography  variant='h6'>Download App</Typography>
-                    <Typography sx={{...labelStyles,color:"graytext",fontWeight:500}}>Save $3 with App New User Only</Typography>
-                    <Stack flexDirection={'row'} columnGap={'.5rem'}>
-
-                        <Box width={'100px'} height={"100px"}>
-                            <img src={QRCodePng} height={'100%'} width={'100%'} style={{objectFit:'contain'}} alt="QR Code"/>
-                        </Box>
-
-                        <Stack justifyContent={'space-around'}>
-                            <Stack>
-                                <img style={{width:"100%",height:"100%",cursor:"pointer"}} src={googlePlayPng} alt="GooglePlay" />
-                            </Stack>
-                            <Stack>
-                                <img style={{width:"100%",height:'100%',cursor:"pointer"}} src={appStorePng} alt="AppStore" />
-                            </Stack>
-                        </Stack>
-                    </Stack>
-
                     <Stack mt={.6} flexDirection={'row'} columnGap={'2rem'}>
                         <MotionConfig whileHover={{scale:1.1}} whileTap={{scale:1}}>
                             <motion.img style={{cursor:"pointer"}} src={facebookPng} alt="Facebook" />
@@ -84,11 +56,12 @@ export const Footer = () => {
                     </Stack>
                 </Stack>
 
+
             </Stack>
 
             {/* lower */}
             <Stack alignSelf={"center"}>
-                <Typography color={'GrayText'}>&copy; Mern Store {new Date().getFullYear()}. All right reserved</Typography>
+                <Typography color={'GrayText'}>&copy; E-Commerce Store {new Date().getFullYear()}. All right reserved</Typography>
             </Stack>
 
     </Stack>

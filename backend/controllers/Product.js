@@ -1,5 +1,8 @@
 const { Schema, default: mongoose } = require("mongoose")
 const Product=require("../models/Product")
+const Cart = require('../models/Cart')
+const Wishlist = require('../models/Wishlist')
+const Order = require('../models/Order')
 
 exports.create=async(req,res)=>{
     try {
@@ -90,14 +93,40 @@ exports.undeleteById=async(req,res)=>{
     }
 }
 
-exports.deleteById=async(req,res)=>{
+exports.deleteProductById = async (req, res) => {
     try {
-        const {id}=req.params
-        const deleted=await Product.findByIdAndUpdate(id,{isDeleted:true},{new:true}).populate("brand")
-        res.status(200).json(deleted)
+        const productId = req.params.id;
+
+        // Delete the product
+        const deletedProduct = await Product.findByIdAndDelete(productId);
+        if (!deletedProduct) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        // Remove product from all carts
+        await Cart.deleteMany({ product: productId });
+
+        // Remove product from all wishlists
+        await Wishlist.deleteMany({ product: productId });
+
+        // Update orders to mark product as deleted
+        await Order.updateMany(
+            { "item.product": productId },
+            { 
+                $set: { 
+                    "item.$[elem].isDeleted": true,
+                    "item.$[elem].deletedAt": new Date()
+                }
+            },
+            { 
+                arrayFilters: [{ "elem.product": productId }],
+                multi: true 
+            }
+        );
+
+        res.json(deletedProduct);
     } catch (error) {
-        console.log(error);
-        res.status(500).json({message:'Error deleting product, please try again later'})
+        res.status(400).json({ message: error.message });
     }
 }
 
