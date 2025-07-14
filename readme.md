@@ -4,6 +4,7 @@
   
 [![LinkedIn](https://img.shields.io/badge/connect-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/saadabdullah786/)
 [![Portfolio](https://img.shields.io/badge/Portfolio-%23000000.svg?style=for-the-badge&logo=firefox&logoColor=#FF7139)](https://saad-dev-portfolio.vercel.app/portfolio)
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Saad-Abdulah/Ecommerce-MERN)
 
 Check out my complete portfolio for more projects and professional experience! 🚀
 
@@ -104,7 +105,11 @@ The application is fully responsive and provides a seamless experience across al
 
 ## Authors
 
-- [@RishiBakshii](https://github.com/RishiBakshii)
+- [@Saad-Abdulah](https://github.com/Saad-Abdulah)
+
+## 🙏 Acknowledgments
+
+This project was forked from [@RishiBakshii](https://github.com/RishiBakshii)'s original work and customized with additional features and improvements.
 
 ## ⭐ Support
 
